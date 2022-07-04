@@ -16,6 +16,7 @@ import { PokemonAbilitiesAndEffect } from "./PokemonAbilitiesAndEffect";
 import { PokemonBaseStats } from "./PokemonBaseStats";
 import { PokemonCatchRate } from "./PokemonCatchRate";
 import { PokemonFigure } from "./PokemonFigure";
+import { PokemonGenderRatio } from "./PokemonGenderRatio";
 import { PokemonTypeEffectiveness } from "./PokemonTypeEffectiveness";
 
 export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
@@ -33,6 +34,8 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 
 		if (isLoading) return null;
 
+		console.log(data);
+
 		return (
 			<section>
 				<header className="mt-4 px-3">
@@ -49,6 +52,7 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 						<PokemonTypeEffectiveness types={data.types} />
 						<PokemonBaseStats stats={data.stats} weight={data.weight} />
 						<PokemonCatchRate name={data.name} />
+						<PokemonGenderRatio name={data.name} />
 					</div>
 					<div className="w-full max-w-xl flex flex-col gap-4"></div>
 				</article>
