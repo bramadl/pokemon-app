@@ -1,17 +1,11 @@
-import React, { useState } from "react";
-import { RiInformationFill, RiMenuUnfoldFill } from "react-icons/ri";
+import React from "react";
+import { RiMenuUnfoldFill } from "react-icons/ri";
 import { useQuery } from "react-query";
-import { CircleLoader } from "react-spinners";
 
 import { fetchPokemonByName } from "../../api/fetchPokemon";
 
-import { queryClient } from "../../App";
-
 import { EmptyContent } from "../../components/MainPanel";
-import { padNumber } from "../../utils/numbers";
-import { stringifySlug } from "../../utils/strings";
-import { elements } from "./pokemon.elements";
-import { ElementKey } from "./pokemon.types";
+
 import { PokemonAbilitiesAndEffect } from "./PokemonAbilitiesAndEffect";
 import { PokemonBaseStats } from "./PokemonBaseStats";
 import { PokemonCatchRate } from "./PokemonCatchRate";

@@ -1,8 +1,11 @@
 import React from "react";
 import { RiInformationFill } from "react-icons/ri";
 import { useQueries } from "react-query";
+
 import { fetchAbilityByUrl } from "../../api/fetchAbilities";
+
 import { Card } from "../../components/Card";
+
 import { PokemonAbilityDetail } from "./PokemonAbilityDetail";
 
 export const PokemonAbilitiesAndEffect: React.FC<{

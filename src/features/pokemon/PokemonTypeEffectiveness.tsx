@@ -5,9 +5,9 @@ import { useQueries } from "react-query";
 import { fetchTypeByUrl } from "../../api/fetchType";
 
 import { Card } from "../../components/Card";
+
 import { elements } from "./pokemon.elements";
 import { sprites } from "./pokemon.sprites";
-
 import { ElementKey } from "./pokemon.types";
 import { PokemonTypeDetail } from "./PokemonTypeDetail";
 

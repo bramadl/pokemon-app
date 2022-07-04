@@ -2,6 +2,7 @@ import React from "react";
 import { IoIosFemale, IoIosMale } from "react-icons/io";
 import { RiPieChartFill } from "react-icons/ri";
 import { useQuery } from "react-query";
+
 import { fetchPokemonSpecies } from "../../api/fetchPokemon";
 
 import { Card } from "../../components/Card";

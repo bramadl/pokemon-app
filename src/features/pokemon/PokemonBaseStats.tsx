@@ -2,6 +2,7 @@ import React from "react";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 
 import { Card } from "../../components/Card";
+
 import { stringifySlug } from "../../utils/strings";
 
 export const PokemonBaseStats: React.FC<{

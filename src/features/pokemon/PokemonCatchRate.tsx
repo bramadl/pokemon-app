@@ -1,8 +1,11 @@
 import React from "react";
 import { MdCatchingPokemon } from "react-icons/md";
 import { useQuery } from "react-query";
+
 import { fetchPokemonSpecies } from "../../api/fetchPokemon";
+
 import { Card } from "../../components/Card";
+
 import { stringifySlug } from "../../utils/strings";
 
 const MAX_CATCH_RATE = 255;

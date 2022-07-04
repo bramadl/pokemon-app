@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
+
 import { fetchAbilityByUrl } from "../../api/fetchAbilities";
 
 export const PokemonAbilityDetail: React.FC<{

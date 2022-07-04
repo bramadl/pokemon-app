@@ -1,6 +1,8 @@
 import React from "react";
+
 import { padNumber } from "../../utils/numbers";
 import { stringifySlug } from "../../utils/strings";
+
 import { elements } from "./pokemon.elements";
 import { ElementKey } from "./pokemon.types";
 

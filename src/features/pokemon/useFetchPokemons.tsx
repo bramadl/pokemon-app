@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
+
 import { fetchPokemon, fetchPokemonByUrl } from "../../api/fetchPokemon";
+
 import { Pokemon, PokemonPage } from "./pokemon.types";
 
 export const useFetchPokemons = () => {

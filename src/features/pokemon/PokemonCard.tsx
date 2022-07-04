@@ -1,6 +1,8 @@
 import { IoChevronForwardOutline } from "react-icons/io5"
 import { NavLink } from "react-router-dom";
+
 import { stringifySlug } from "../../utils/strings";
+
 import { sprites } from "./pokemon.sprites";
 import { PokemonSprite } from "./pokemon.types";
 
