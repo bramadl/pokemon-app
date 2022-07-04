@@ -57,7 +57,7 @@ export const PokemonGenderRatio: React.FC<{ name: string }> = ({ name }) => {
 						</h3>
 					</div>
 
-					{isGenderless && (
+					{!isGenderless && (
 						<div className="flex items-center gap-4">
 							<div className="flex items-center gap-2 text-blue-400">
 								<IoIosMale className="text-2xl" />
