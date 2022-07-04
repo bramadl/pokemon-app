@@ -72,11 +72,11 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 					types={pokemonTypes}
 				/>
 
-				<article className="flex justify-center gap-8 mt-8 px-20">
+				<article className="flex justify-center gap-8 my-20 px-20">
 					<div className="w-full max-w-xl flex flex-col gap-4">
 						<PokemonAbilitiesAndEffect abilities={data.abilities} />
 						<PokemonTypeEffectiveness types={data.types} />
-						<PokemonBaseStats stats={data.stats} />
+						<PokemonBaseStats stats={data.stats} weight={data.weight} />
 					</div>
 					<div className="w-full max-w-xl flex flex-col gap-4">
 
