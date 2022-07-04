@@ -68,7 +68,7 @@ export const elements = {
     backgroundClass: "bg-blue-400/10",
   },
   steel: {
-    textClass: "",
-    backgroundClass: "",
+    textClass: "text-slate-400",
+    backgroundClass: "bg-slate-400/10",
   },
 }
