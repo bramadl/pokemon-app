@@ -23,8 +23,6 @@ export const PokemonCatchRate: React.FC<{
 	const { capture_rate } = data;
 	const captureRate = Math.round((100 / MAX_CATCH_RATE) * capture_rate);
 
-	console.log(captureRate);
-
 	return (
 		<Card
 			id="catchRateSection"
