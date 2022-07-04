@@ -14,6 +14,7 @@ import { elements } from "./pokemon.elements";
 import { ElementKey } from "./pokemon.types";
 import { PokemonAbilitiesAndEffect } from "./PokemonAbilitiesAndEffect";
 import { PokemonBaseStats } from "./PokemonBaseStats";
+import { PokemonCatchRate } from "./PokemonCatchRate";
 import { PokemonFigure } from "./PokemonFigure";
 import { PokemonTypeEffectiveness } from "./PokemonTypeEffectiveness";
 
@@ -21,7 +22,7 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 	({ pokemon }) => {
 		if (!pokemon) return <EmptyContent />;
 
-		const { data, error, isLoading } = useQuery(
+		const { data, isLoading } = useQuery(
 			["pokemon", pokemon],
 			() => fetchPokemonByName(pokemon),
 			{
@@ -32,31 +33,6 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 
 		if (isLoading) return null;
 
-		const pokemonSprite =
-			data.sprites.other.home.front_default ||
-			data.sprites.front_default ||
-			data.sprites.other["official-artwork"].front_default;
-
-		const pokemonDex = padNumber(data.order, 3);
-
-		const pokemonName = stringifySlug(data.name);
-
-		const pokemonTypes = data.types.map(
-			({ type }: { type: { name: ElementKey } }, index: number) => (
-				<span
-					key={type.name}
-					className={`${
-						elements[type.name].textClass
-					} uppercase text-xl font-medium inline-flex items-center gap-2`}
-				>
-					{type.name}{" "}
-					{index !== data.types.length - 1 && (
-						<span className="text-white">+</span>
-					)}
-				</span>
-			)
-		);
-
 		return (
 			<section>
 				<header className="mt-4 px-3">
@@ -65,22 +41,16 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 					</button>
 				</header>
 
-				<PokemonFigure
-					name={pokemonName}
-					sprite={pokemonSprite}
-					pokedex={pokemonDex}
-					types={pokemonTypes}
-				/>
+				<PokemonFigure pokemon={data} />
 
 				<article className="flex justify-center gap-8 my-20 px-20">
 					<div className="w-full max-w-xl flex flex-col gap-4">
 						<PokemonAbilitiesAndEffect abilities={data.abilities} />
 						<PokemonTypeEffectiveness types={data.types} />
 						<PokemonBaseStats stats={data.stats} weight={data.weight} />
+						<PokemonCatchRate name={data.name} />
 					</div>
-					<div className="w-full max-w-xl flex flex-col gap-4">
-
-					</div>
+					<div className="w-full max-w-xl flex flex-col gap-4"></div>
 				</article>
 			</section>
 		);
