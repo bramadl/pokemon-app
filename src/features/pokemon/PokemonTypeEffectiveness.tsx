@@ -7,7 +7,7 @@ import { fetchTypeByUrl } from "../../api/fetchType";
 
 import { Card } from "../../components/Card";
 
-import pokemonHelper from "../../helpers/pokemonHelper";
+import pokemonHelper from "./pokemon.helpers";
 
 import { elements } from "./pokemon.elements";
 import { sprites } from "./pokemon.sprites";

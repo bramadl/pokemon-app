@@ -6,7 +6,7 @@ import { ClipLoader } from "react-spinners";
 import { fetchAbilityByUrl } from "../../api/fetchAbilities";
 
 import { Card } from "../../components/Card";
-import pokemonHelper from "../../helpers/pokemonHelper";
+import pokemonHelper from "./pokemon.helpers";
 
 import { PokemonAbilityDetail } from "./PokemonAbilityDetail";
 

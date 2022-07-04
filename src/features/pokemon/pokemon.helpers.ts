@@ -1,8 +1,8 @@
 import { UseQueryResult } from "react-query";
 
-import { ElementKey } from "../features/pokemon/pokemon.types";
+import { ElementKey } from "./pokemon.types";
 
-import { uniqueArray } from "../utils/arrays";
+import { uniqueArray } from "../../utils/arrays";
 
 const pokemonHelper = {
 	MAX_CATCH_RATE: 255,

@@ -7,7 +7,7 @@ import { fetchPokemonSpecies } from "../../api/fetchPokemon";
 
 import { Card } from "../../components/Card";
 
-import pokemonHelper from "../../helpers/pokemonHelper";
+import pokemonHelper from "./pokemon.helpers";
 
 import { stringifySlug } from "../../utils/strings";
 
