@@ -14,10 +14,10 @@ import { useFetchPokemons } from "../features/pokemon/useFetchPokemons";
 import { useDebounce } from "../hooks/useDebounce";
 
 export const HomePage = () => {
-  const [_, startTransition] = useTransition();
+  const [_transition, startTransition] = useTransition();
 	const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
 	const [searchValue, setSearchValue] = useState<string>("");
-  const [previewParams, setPreviewParams] = useSearchParams();
+  const [previewParams, _setPreviewParams] = useSearchParams();
 	const { isLoading, pokemons, ref, isFetchingNextPage } = useFetchPokemons();
 	const debouncedSearchValue = useDebounce<string>(searchValue, 50);
 
@@ -42,6 +42,10 @@ export const HomePage = () => {
   useEffect(() => {
     setFilteredPokemons(pokemons);
   }, [pokemons]);
+
+  useEffect(() => {
+    setSearchValue("");
+  }, [previewParams.get("preview")]);
 
 	return (
 		<div id="homePage" className="w-full h-screen flex overflow-hidden">
