@@ -7,6 +7,7 @@ import { ClipLoader } from "react-spinners";
 import { fetchPokemonSpecies } from "../../api/fetchPokemon";
 
 import { Card } from "../../components/Card";
+import { stringifySlug } from "../../utils/strings";
 import pokemonHelper from "./pokemon.helpers";
 
 const CardWrapper: React.FC<{
@@ -37,6 +38,7 @@ export const PokemonGenderRatio: React.FC<{ name: string }> = ({ name }) => {
 	}
 
 	const { maleRatio, femaleRatio } = pokemonHelper.makeGenderRatios(data);
+	const isGenderless = !(maleRatio > 0 && femaleRatio > 0);
 
 	return (
 		<CardWrapper
@@ -44,19 +46,29 @@ export const PokemonGenderRatio: React.FC<{ name: string }> = ({ name }) => {
 				<React.Fragment>
 					<div className="flex items-center gap-2">
 						<RiPieChartFill className="text-3xl text-green-400" />
-						<h3 className="text-lg font-semibold">Gender Ratio</h3>
+						<h3
+							className={`text-lg font-semibold ${
+								isGenderless ? "capitalize" : ""
+							}`}
+						>
+							{isGenderless
+								? `${stringifySlug(name)} is genderless`
+								: "Gender Ratio"}
+						</h3>
 					</div>
 
-					<div className="flex items-center gap-4">
-						<div className="flex items-center gap-2 text-blue-400">
-							<IoIosMale className="text-2xl" />
-							<span className="font-semibold">{maleRatio}%</span>
+					{isGenderless && (
+						<div className="flex items-center gap-4">
+							<div className="flex items-center gap-2 text-blue-400">
+								<IoIosMale className="text-2xl" />
+								<span className="font-semibold">{maleRatio}%</span>
+							</div>
+							<div className="flex items-center gap-2 text-pink-400">
+								<IoIosFemale className="text-2xl" />
+								<span className="font-semibold">{femaleRatio}%</span>
+							</div>
 						</div>
-						<div className="flex items-center gap-2 text-pink-400">
-							<IoIosFemale className="text-2xl" />
-							<span className="font-semibold">{femaleRatio}%</span>
-						</div>
-					</div>
+					)}
 				</React.Fragment>
 			}
 		/>

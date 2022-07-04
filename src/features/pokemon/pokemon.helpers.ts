@@ -84,8 +84,13 @@ const pokemonHelper = {
 	},
 
   makeGenderRatios: (data: any) => {
-    const femaleRatio = (data.gender_rate / 8) * 100;
-	  const maleRatio = 100 - femaleRatio;
+    let femaleRatio = (data.gender_rate / 8) * 100;
+	  let maleRatio = 100 - femaleRatio;
+
+		if (data.gender_rate === -1) {
+			femaleRatio = 0;
+			maleRatio = 0;
+		}
 
     return {
       femaleRatio,

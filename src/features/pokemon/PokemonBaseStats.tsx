@@ -39,7 +39,7 @@ export const PokemonBaseStats: React.FC<{
 			<ul className="flex flex-col gap-4">
 				{statsMapped.map((stat) => (
 					<li key={stat.name} className="flex gap-8">
-						<div className="w-40">
+						<div className="w-48">
 							<span className="font-bold capitalize">
 								{stringifySlug(stat.name)}:
 							</span>{" "}
@@ -51,7 +51,7 @@ export const PokemonBaseStats: React.FC<{
 					</li>
 				))}
 				<li className="flex gap-8">
-					<div className="w-40">
+					<div className="w-48">
 						<span className="font-bold capitalize">Weight:</span>
 					</div>
 					<div className="flex-1">
