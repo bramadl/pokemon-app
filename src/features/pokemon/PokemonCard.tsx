@@ -7,15 +7,17 @@ import { sprites } from "./pokemon.sprites";
 import { PokemonSprite } from "./pokemon.types";
 
 export const PokemonCard: React.FC<{
+	id: string;
 	pokedex: string;
 	name: string;
 	sprite: string;
 	types: PokemonSprite[];
-}> = ({ pokedex, name, sprite, types }) => {
+}> = ({ id, pokedex, name, sprite, types }) => {
 	const [params, _] = useSearchParams();
 
 	return (
 		<NavLink
+			id={id}
 			className={() =>
 				`flex items-center justify-between gap-2 xl:gap-4 py-4 px-4 xl:px-8 border-b last:border-b-0 border-white/10 hover:bg-white/5 ${
 					params.get("preview") === name ? "bg-red-900/10" : ""
