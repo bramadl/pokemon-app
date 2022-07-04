@@ -2,24 +2,44 @@ import React from "react";
 import { IoIosFemale, IoIosMale } from "react-icons/io";
 import { RiPieChartFill } from "react-icons/ri";
 import { useQuery } from "react-query";
+import { ClipLoader } from "react-spinners";
 
 import { fetchPokemonSpecies } from "../../api/fetchPokemon";
 
 import { Card } from "../../components/Card";
+import pokemonHelper from "../../helpers/pokemonHelper";
+
+const CardWrapper: React.FC<{
+	header: React.ReactNode | React.ReactFragment;
+}> = ({ header }) => {
+	return <Card id="carchRateSection" header={header} />;
+};
 
 export const PokemonGenderRatio: React.FC<{ name: string }> = ({ name }) => {
-  const { data, isLoading } = useQuery(["pokemon-species", name], () => fetchPokemonSpecies(name), {
-    refetchOnWindowFocus: false,
-  });
+	const { data, isLoading } = useQuery(
+		["pokemon-species", name],
+		() => fetchPokemonSpecies(name),
+		{
+			refetchOnWindowFocus: false,
+		}
+	);
 
-  if (isLoading) return null;
+	if (isLoading) {
+		return (
+			<CardWrapper
+				header={
+					<div className="w-full flex items-center justify-center">
+						<ClipLoader color="#FFFFFF" />
+					</div>
+				}
+			/>
+		);
+	}
 
-  const femaleRatio = (data.gender_rate / 8) * 100;
-  const maleRatio = 100 - femaleRatio;
+	const { maleRatio, femaleRatio } = pokemonHelper.makeGenderRatios(data);
 
 	return (
-		<Card
-			id="catchRateSection"
+		<CardWrapper
 			header={
 				<React.Fragment>
 					<div className="flex items-center gap-2">

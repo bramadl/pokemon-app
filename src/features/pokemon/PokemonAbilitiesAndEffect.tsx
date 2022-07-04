@@ -1,20 +1,42 @@
 import React from "react";
 import { RiInformationFill } from "react-icons/ri";
 import { useQueries } from "react-query";
+import { ClipLoader } from "react-spinners";
 
 import { fetchAbilityByUrl } from "../../api/fetchAbilities";
 
 import { Card } from "../../components/Card";
+import pokemonHelper from "../../helpers/pokemonHelper";
 
 import { PokemonAbilityDetail } from "./PokemonAbilityDetail";
 
+type AbilityProps = {
+	ability: {
+		name: string;
+		url: string;
+	};
+};
+
+const CardWrapper: React.FC<{
+	children: React.ReactNode | React.ReactFragment;
+}> = ({ children }) => {
+	return (
+		<Card
+			id="abilitiesAndEffectSection"
+			header={
+				<div className="flex items-center gap-2">
+					<RiInformationFill className="text-3xl text-orange-400" />
+					<h3 className="text-lg font-semibold">Abilities and Effects</h3>
+				</div>
+			}
+		>
+			{children}
+		</Card>
+	);
+};
+
 export const PokemonAbilitiesAndEffect: React.FC<{
-	abilities: {
-		ability: {
-			name: string;
-			url: string;
-		};
-	}[];
+	abilities: AbilityProps[];
 }> = React.memo(({ abilities }) => {
 	const queries = useQueries(
 		abilities.map(({ ability: { url } }) => {
@@ -26,33 +48,20 @@ export const PokemonAbilitiesAndEffect: React.FC<{
 		})
 	);
 
-	if (queries.some((query) => query.isLoading)) return null;
+	if (queries.some((query) => query.isLoading)) {
+		return (
+			<CardWrapper>
+				<div className="flex items-center justify-center">
+					<ClipLoader color="#FFFFFF" />
+				</div>
+			</CardWrapper>
+		);
+	}
 
-	const abilitiesData = queries.map((query) => query.data);
-	const effects = abilitiesData.map(
-		(data) => ({
-			name: data.name,
-			effect: data.effect_entries.find(
-				(entry: {
-					effect: string;
-					language: {
-						name: string;
-					};
-				}) => entry.language.name === "en"
-			).effect
-		})
-	);
+	const effects = pokemonHelper.makeEffects(queries);
 
 	return (
-		<Card
-			id="abilitiesAndEffectSection"
-			header={
-				<div className="flex items-center gap-2">
-					<RiInformationFill className="text-3xl text-orange-400" />
-					<h3 className="text-lg font-semibold">Abilities and Effects</h3>
-				</div>
-			}
-		>
+		<CardWrapper>
 			<ul className="flex flex-col gap-4">
 				{effects.map(({ name, effect }, index) => (
 					<li key={index}>
@@ -60,6 +69,6 @@ export const PokemonAbilitiesAndEffect: React.FC<{
 					</li>
 				))}
 			</ul>
-		</Card>
+		</CardWrapper>
 	);
 });

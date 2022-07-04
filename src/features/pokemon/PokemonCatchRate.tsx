@@ -1,18 +1,23 @@
 import React from "react";
 import { MdCatchingPokemon } from "react-icons/md";
 import { useQuery } from "react-query";
+import { ClipLoader } from "react-spinners";
 
 import { fetchPokemonSpecies } from "../../api/fetchPokemon";
 
 import { Card } from "../../components/Card";
 
+import pokemonHelper from "../../helpers/pokemonHelper";
+
 import { stringifySlug } from "../../utils/strings";
 
-const MAX_CATCH_RATE = 255;
+const CardWrapper: React.FC<{
+	header: React.ReactNode | React.ReactFragment;
+}> = ({ header }) => {
+	return <Card id="carchRateSection" header={header} />;
+};
 
-export const PokemonCatchRate: React.FC<{
-	name: string;
-}> = ({ name }) => {
+export const PokemonCatchRate: React.FC<{ name: string }> = ({ name }) => {
 	const { data, isLoading } = useQuery(
 		["pokemon-species", name],
 		() => fetchPokemonSpecies(name),
@@ -21,24 +26,32 @@ export const PokemonCatchRate: React.FC<{
 		}
 	);
 
-	if (isLoading) return null;
+	if (isLoading) {
+		return (
+			<CardWrapper
+				header={
+					<div className="w-full flex items-center justify-center">
+						<ClipLoader color="#FFFFFF" />
+					</div>
+				}
+			/>
+		);
+	}
 
-	const { capture_rate } = data;
-	const captureRate = Math.round((100 / MAX_CATCH_RATE) * capture_rate);
+	const captureRate = pokemonHelper.makeCaptureRate(data);
 
 	return (
-		<Card
-			id="catchRateSection"
+		<CardWrapper
 			header={
 				<div className="flex items-center gap-2">
 					<MdCatchingPokemon className="text-3xl text-green-400" />
 					<div className="flex flex-col">
-            <h3 className="text-lg font-semibold">Catch Rate</h3>
-            <p className="text-xs text-white/50 leading-none">
-              <span className="capitalize">{stringifySlug(name)}</span> {" "}
-              has a catch rate of {captureRate}%
-            </p>
-          </div>
+						<h3 className="text-lg font-semibold">Catch Rate</h3>
+						<p className="text-xs text-white/50 leading-none">
+							<span className="capitalize">{stringifySlug(name)}</span> has a
+							catch rate of {captureRate}%
+						</p>
+					</div>
 				</div>
 			}
 		/>

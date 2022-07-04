@@ -28,8 +28,6 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 
 		if (isLoading) return null;
 
-		console.log(data);
-
 		return (
 			<section>
 				<header className="mt-4 px-3">
