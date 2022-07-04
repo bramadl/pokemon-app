@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { MdCatchingPokemon } from "react-icons/md";
 import { useQuery } from "react-query";
 import { ClipLoader } from "react-spinners";
@@ -11,6 +11,8 @@ import pokemonHelper from "./pokemon.helpers";
 
 import { stringifySlug } from "../../utils/strings";
 
+import { PokemonThemeContext } from "./PokemonDetail";
+
 const CardWrapper: React.FC<{
 	header: React.ReactNode | React.ReactFragment;
 }> = ({ header }) => {
@@ -18,6 +20,8 @@ const CardWrapper: React.FC<{
 };
 
 export const PokemonCatchRate: React.FC<{ name: string }> = ({ name }) => {
+	const pokemonThemeContext = useContext(PokemonThemeContext);
+	
 	const { data, isLoading } = useQuery(
 		["pokemon-species", name],
 		() => fetchPokemonSpecies(name),
@@ -44,7 +48,7 @@ export const PokemonCatchRate: React.FC<{ name: string }> = ({ name }) => {
 		<CardWrapper
 			header={
 				<div className="flex items-center gap-2">
-					<MdCatchingPokemon className="text-3xl text-green-400" />
+					<MdCatchingPokemon className={`text-3xl ${pokemonThemeContext}`} />
 					<div className="flex flex-col">
 						<h3 className="text-lg font-semibold">Catch Rate</h3>
 						<p className="text-xs text-white/50 leading-none">

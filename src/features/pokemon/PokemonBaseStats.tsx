@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 
 import { Card } from "../../components/Card";
 
 import { stringifySlug } from "../../utils/strings";
 
+import { PokemonThemeContext } from "./PokemonDetail";
+
 export const PokemonBaseStats: React.FC<{
 	stats: [];
 	weight: number;
 }> = React.memo(({ stats, weight }) => {
+	const pokemonThemeContext = useContext(PokemonThemeContext);
+	
 	const statsMapped = stats.map((stat: any) => ({
 		name: stat.stat.name,
 		baseStat: stat.base_stat,
@@ -27,7 +31,7 @@ export const PokemonBaseStats: React.FC<{
 			header={
 				<React.Fragment>
 					<div className="flex items-center gap-2">
-						<HiOutlineMenuAlt1 className="text-3xl text-green-400" />
+						<HiOutlineMenuAlt1 className={`text-3xl ${pokemonThemeContext}`} />
 						<h3 className="text-lg font-semibold">Base Stats</h3>
 					</div>
 					<div className="flex items-center justify-center bg-white/10 text-white/50 py-0.5 px-3 rounded-full">

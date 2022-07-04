@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IoIosFemale, IoIosMale } from "react-icons/io";
 import { RiPieChartFill } from "react-icons/ri";
 import { useQuery } from "react-query";
@@ -9,6 +9,7 @@ import { fetchPokemonSpecies } from "../../api/fetchPokemon";
 import { Card } from "../../components/Card";
 import { stringifySlug } from "../../utils/strings";
 import pokemonHelper from "./pokemon.helpers";
+import { PokemonThemeContext } from "./PokemonDetail";
 
 const CardWrapper: React.FC<{
 	header: React.ReactNode | React.ReactFragment;
@@ -17,6 +18,8 @@ const CardWrapper: React.FC<{
 };
 
 export const PokemonGenderRatio: React.FC<{ name: string }> = ({ name }) => {
+	const pokemonThemeContext = useContext(PokemonThemeContext);
+	
 	const { data, isLoading } = useQuery(
 		["pokemon-species", name],
 		() => fetchPokemonSpecies(name),
@@ -45,7 +48,7 @@ export const PokemonGenderRatio: React.FC<{ name: string }> = ({ name }) => {
 			header={
 				<React.Fragment>
 					<div className="flex items-center gap-2">
-						<RiPieChartFill className="text-3xl text-green-400" />
+						<RiPieChartFill className={`text-3xl ${pokemonThemeContext}`} />
 						<h3
 							className={`text-lg font-semibold ${
 								isGenderless ? "capitalize" : ""

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsStarFill } from "react-icons/bs";
 import { useQueries } from "react-query";
 import { ClipLoader } from "react-spinners";
@@ -13,6 +13,7 @@ import { elements } from "./pokemon.elements";
 import { sprites } from "./pokemon.sprites";
 import { ElementKey } from "./pokemon.types";
 import { PokemonTypeDetail } from "./PokemonTypeDetail";
+import { PokemonThemeContext } from "./PokemonDetail";
 
 type TypeProps = {
 	type: {
@@ -24,12 +25,14 @@ type TypeProps = {
 const CardWrapper: React.FC<{
 	children: React.ReactNode | React.ReactFragment;
 }> = ({ children }) => {
+	const pokemonThemeContext = useContext(PokemonThemeContext);
+	
 	return (
 		<Card
 			id="abilitiesAndEffectSection"
 			header={
 				<div className="flex items-center gap-2">
-					<BsStarFill className="text-3xl text-green-400" />
+					<BsStarFill className={`text-3xl ${pokemonThemeContext}`} />
 					<h3 className="text-lg font-semibold">Type Effectiveness</h3>
 				</div>
 			}

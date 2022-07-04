@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RiInformationFill } from "react-icons/ri";
 import { useQueries } from "react-query";
 import { ClipLoader } from "react-spinners";
@@ -9,6 +9,7 @@ import { Card } from "../../components/Card";
 import pokemonHelper from "./pokemon.helpers";
 
 import { PokemonAbilityDetail } from "./PokemonAbilityDetail";
+import { PokemonThemeContext } from "./PokemonDetail";
 
 type AbilityProps = {
 	ability: {
@@ -20,12 +21,14 @@ type AbilityProps = {
 const CardWrapper: React.FC<{
 	children: React.ReactNode | React.ReactFragment;
 }> = ({ children }) => {
+	const pokemonThemeContext = useContext(PokemonThemeContext);
+	
 	return (
 		<Card
 			id="abilitiesAndEffectSection"
 			header={
 				<div className="flex items-center gap-2">
-					<RiInformationFill className="text-3xl text-orange-400" />
+					<RiInformationFill className={`text-3xl ${pokemonThemeContext}`} />
 					<h3 className="text-lg font-semibold">Abilities and Effects</h3>
 				</div>
 			}
