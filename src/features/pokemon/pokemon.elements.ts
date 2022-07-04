@@ -4,8 +4,8 @@ export const elements = {
     backgroundClass: "bg-lime-600/10",
   },
   dark: {
-    textClass: "text-zinc-900",
-    backgroundClass: "bg-zinc-900/10",
+    textClass: "text-zinc-400",
+    backgroundClass: "bg-zinc-400/10",
   },
   dragon: {
     textClass: "text-blue-700",
@@ -32,8 +32,8 @@ export const elements = {
     backgroundClass: "bg-sky-400/10",
   },
   ghost: {
-    textClass: "text-violet-900",
-    backgroundClass: "bg-violet-900/10",
+    textClass: "text-indigo-400",
+    backgroundClass: "bg-indigo-400/10",
   },
   grass: {
     textClass: "text-green-400",
@@ -48,8 +48,8 @@ export const elements = {
     backgroundClass: "bg-cyan-400/10",
   },
   normal: {
-    textClass: "",
-    backgroundClass: "",
+    textClass: "text-zinc-400",
+    backgroundClass: "bg-zinc-400/10",
   },
   poison: {
     textClass: "text-purple-400",
