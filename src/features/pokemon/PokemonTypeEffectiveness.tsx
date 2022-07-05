@@ -12,7 +12,6 @@ import pokemonHelper from "./pokemon.helpers";
 import { elements } from "./pokemon.elements";
 import { sprites } from "./pokemon.sprites";
 import { ElementKey } from "./pokemon.types";
-import { PokemonTypeDetail } from "./PokemonTypeDetail";
 import { PokemonThemeContext } from "./PokemonDetail";
 
 type TypeProps = {
@@ -26,7 +25,7 @@ const CardWrapper: React.FC<{
 	children: React.ReactNode | React.ReactFragment;
 }> = ({ children }) => {
 	const pokemonThemeContext = useContext(PokemonThemeContext);
-	
+
 	return (
 		<Card
 			id="abilitiesAndEffectSection"
@@ -76,12 +75,16 @@ export const PokemonTypeEffectiveness: React.FC<{ types: TypeProps[] }> =
 								elements[damage.name].backgroundClass
 							}`}
 						>
-							<PokemonTypeDetail
-								color={elements[damage.name].textClass}
-								name={damage.name}
-								sprite={sprites[damage.name]}
-								power={pokemonHelper.transformPower(damage.power)}
+							<img
+								alt={damage.name}
+								className="w-6 h-6 rounded-full object-cover"
+								src={sprites[damage.name]}
 							/>
+							<span
+								className={`font-semibold ${elements[damage.name].textClass}`}
+							>
+								{pokemonHelper.transformPower(damage.power)}
+							</span>
 						</li>
 					))}
 				</ul>
