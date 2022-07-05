@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { fetchPokemonByName } from "../../api/fetchPokemon";
 
 import { EmptyContent } from "../../components/MainPanel";
+import { stringifySlug } from "../../utils/strings";
 import { elements } from "./pokemon.elements";
 import { ElementKey } from "./pokemon.types";
 
@@ -54,7 +55,9 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 			>
 				<header
 					className={`sticky top-0 left-0 w-full h-auto py-4 px-3 border-b ${
-						hasScrolledDown ? "border-white/10 bg-dark-200" : "border-transparent"
+						hasScrolledDown
+							? "border-white/10 bg-dark-200"
+							: "border-transparent"
 					} transition ease-out duration-300`}
 				>
 					<div className="flex items-center gap-4">
@@ -62,7 +65,13 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 							<RiMenuUnfoldFill className="text-xl" />
 						</button>
 
-						<h2>Halo</h2>
+						<h2
+							className={`capitalize text-xl font-bold ${
+								hasScrolledDown ? "opacity-100" : "opacity-0"
+							} transition ease-out duration-300`}
+						>
+							{stringifySlug(pokemon)}
+						</h2>
 					</div>
 				</header>
 
