@@ -52,7 +52,7 @@ export const PokemonEggGroups: React.FC<{ name: string }> = React.memo(
                     <span className="capitalize">{egg.name}</span>
                     {(index !== array.length - 1) && <span> and </span>}
                   </React.Fragment>
-                ))} groups
+                ))} egg groups
               </h3>
               <p className="text-xs text-white/50 leading-none">
                 {hatchCounter} of steps to hatch
