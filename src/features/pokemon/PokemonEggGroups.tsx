@@ -38,7 +38,7 @@ export const PokemonEggGroups: React.FC<{ name: string }> = React.memo(
 			);
 		}
 
-    const { eggGroups, hatchCounter } = pokemonHelper.makeEggs(data);
+		const { eggGroups, hatchCounter } = pokemonHelper.makeEggs(data);
 
 		return (
 			<CardWrapper
@@ -46,18 +46,19 @@ export const PokemonEggGroups: React.FC<{ name: string }> = React.memo(
 					<div className="flex items-center gap-2">
 						<GiDinosaurEgg className={`text-3xl ${pokemonThemeContext}`} />
 						<div className="flex flex-col">
-              <h3 className="text-lg font-semibold">
-                {eggGroups.map((egg, index, array) => (
-                  <React.Fragment key={egg.name}>
-                    <span className="capitalize">{egg.name}</span>
-                    {(index !== array.length - 1) && <span> and </span>}
-                  </React.Fragment>
-                ))} egg groups
-              </h3>
-              <p className="text-xs text-white/50 leading-none">
-                {hatchCounter} of steps to hatch
-              </p>
-            </div>
+							<h3 className="text-lg font-semibold">
+								{eggGroups.map((egg, index, array) => (
+									<React.Fragment key={egg.name}>
+										<span className="capitalize">{egg.name}</span>
+										{index !== array.length - 1 && <span> and </span>}
+									</React.Fragment>
+								))}{" "}
+								egg groups
+							</h3>
+							<p className="text-xs text-white/50 leading-none">
+								{hatchCounter} of steps to hatch
+							</p>
+						</div>
 					</div>
 				}
 			/>

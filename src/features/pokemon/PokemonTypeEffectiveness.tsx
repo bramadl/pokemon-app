@@ -70,9 +70,8 @@ export const PokemonTypeEffectiveness: React.FC<{ types: TypeProps[] }> =
 			<CardWrapper>
 				<ul className="flex flex-wrap gap-2">
 					{damageSets.map((damage) => (
-						<>
+						<React.Fragment key={damage.name}>
 							<li
-								key={damage.name}
 								className={`flex items-center gap-1 py-1.5 px-3 rounded ${
 									elements[damage.name].backgroundClass
 								}`}
@@ -107,7 +106,7 @@ export const PokemonTypeEffectiveness: React.FC<{ types: TypeProps[] }> =
 									type
 								</p>
 							</ReactTooltip>
-						</>
+						</React.Fragment>
 					))}
 				</ul>
 			</CardWrapper>

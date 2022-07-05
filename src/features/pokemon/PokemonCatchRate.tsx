@@ -19,45 +19,47 @@ const CardWrapper: React.FC<{
 	return <Card id="carchRateSection" header={header} />;
 };
 
-export const PokemonCatchRate: React.FC<{ name: string }> = ({ name }) => {
-	const pokemonThemeContext = useContext(PokemonThemeContext);
-	
-	const { data, isLoading } = useQuery(
-		["pokemon-species", name],
-		() => fetchPokemonSpecies(name),
-		{
-			refetchOnWindowFocus: false,
-		}
-	);
+export const PokemonCatchRate: React.FC<{ name: string }> = React.memo(
+	({ name }) => {
+		const pokemonThemeContext = useContext(PokemonThemeContext);
 
-	if (isLoading) {
+		const { data, isLoading } = useQuery(
+			["pokemon-species", name],
+			() => fetchPokemonSpecies(name),
+			{
+				refetchOnWindowFocus: false,
+			}
+		);
+
+		if (isLoading) {
+			return (
+				<CardWrapper
+					header={
+						<div className="w-full flex items-center justify-center">
+							<ClipLoader color="#FFFFFF" />
+						</div>
+					}
+				/>
+			);
+		}
+
+		const captureRate = pokemonHelper.makeCaptureRate(data);
+
 		return (
 			<CardWrapper
 				header={
-					<div className="w-full flex items-center justify-center">
-						<ClipLoader color="#FFFFFF" />
+					<div className="flex items-center gap-2">
+						<MdCatchingPokemon className={`text-3xl ${pokemonThemeContext}`} />
+						<div className="flex flex-col">
+							<h3 className="text-lg font-semibold">Catch Rate</h3>
+							<p className="text-xs text-white/50 leading-none">
+								<span className="capitalize">{stringifySlug(name)}</span> has a
+								catch rate of {captureRate}%
+							</p>
+						</div>
 					</div>
 				}
 			/>
 		);
 	}
-
-	const captureRate = pokemonHelper.makeCaptureRate(data);
-
-	return (
-		<CardWrapper
-			header={
-				<div className="flex items-center gap-2">
-					<MdCatchingPokemon className={`text-3xl ${pokemonThemeContext}`} />
-					<div className="flex flex-col">
-						<h3 className="text-lg font-semibold">Catch Rate</h3>
-						<p className="text-xs text-white/50 leading-none">
-							<span className="capitalize">{stringifySlug(name)}</span> has a
-							catch rate of {captureRate}%
-						</p>
-					</div>
-				</div>
-			}
-		/>
-	);
-};
+);

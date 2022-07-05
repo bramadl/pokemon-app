@@ -16,6 +16,7 @@ import { PokemonCatchRate } from "./PokemonCatchRate";
 import { PokemonEggGroups } from "./PokemonEggGroups";
 import { PokemonFigure } from "./PokemonFigure";
 import { PokemonGenderRatio } from "./PokemonGenderRatio";
+import { PokemonObtainMethod } from "./PokemonObtainMethod";
 import { PokemonTypeEffectiveness } from "./PokemonTypeEffectiveness";
 
 export const PokemonThemeContext = createContext("");
@@ -91,7 +92,9 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 									<PokemonGenderRatio name={data.name} />
 									<PokemonEggGroups name={data.name} />
 								</div>
-								<div className="w-full max-w-xl flex flex-col gap-4"></div>
+								<div className="w-full max-w-xl flex flex-col gap-4">
+									<PokemonObtainMethod name={data.name} pokemonId={data.id} />
+								</div>
 							</article>
 						</PokemonThemeContext.Provider>
 					</>
