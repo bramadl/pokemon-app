@@ -6,9 +6,8 @@ import { ClipLoader } from "react-spinners";
 import { fetchAbilityByUrl } from "../../api/fetchAbilities";
 
 import { Card } from "../../components/Card";
-import pokemonHelper from "./pokemon.helpers";
 
-import { PokemonAbilityDetail } from "./PokemonAbilityDetail";
+import pokemonHelper from "./pokemon.helpers";
 import { PokemonThemeContext } from "./PokemonDetail";
 
 type AbilityProps = {
@@ -22,7 +21,7 @@ const CardWrapper: React.FC<{
 	children: React.ReactNode | React.ReactFragment;
 }> = ({ children }) => {
 	const pokemonThemeContext = useContext(PokemonThemeContext);
-	
+
 	return (
 		<Card
 			id="abilitiesAndEffectSection"
@@ -68,7 +67,12 @@ export const PokemonAbilitiesAndEffect: React.FC<{
 			<ul className="flex flex-col gap-4">
 				{effects.map(({ name, effect }, index) => (
 					<li key={index}>
-						<PokemonAbilityDetail name={name} effect={effect} />
+						<h4 className="font-medium text-lg capitalize">{name}</h4>
+						{effect ? (
+							<p className="mt-2 text-white/80">{effect}</p>
+						) : (
+							<p className="mt-2 text-white/50 italic">No effect provided</p>
+						)}
 					</li>
 				))}
 			</ul>

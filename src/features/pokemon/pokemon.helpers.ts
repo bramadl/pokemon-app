@@ -78,7 +78,7 @@ const pokemonHelper = {
 						name: string;
 					};
 				}) => entry.language.name === "en"
-			).effect,
+			)?.effect,
 		}));
 
 		return effects;
