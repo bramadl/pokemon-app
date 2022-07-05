@@ -11,6 +11,7 @@ import { ElementKey } from "./pokemon.types";
 import { PokemonAbilitiesAndEffect } from "./PokemonAbilitiesAndEffect";
 import { PokemonBaseStats } from "./PokemonBaseStats";
 import { PokemonCatchRate } from "./PokemonCatchRate";
+import { PokemonEggGroups } from "./PokemonEggGroups";
 import { PokemonFigure } from "./PokemonFigure";
 import { PokemonGenderRatio } from "./PokemonGenderRatio";
 import { PokemonTypeEffectiveness } from "./PokemonTypeEffectiveness";
@@ -53,6 +54,7 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 							<PokemonBaseStats stats={data.stats} weight={data.weight} />
 							<PokemonCatchRate name={data.name} />
 							<PokemonGenderRatio name={data.name} />
+							<PokemonEggGroups name={data.name} />
 						</div>
 						<div className="w-full max-w-xl flex flex-col gap-4"></div>
 					</article>

@@ -3,6 +3,7 @@ import { UseQueryResult } from "react-query";
 import { ElementKey } from "./pokemon.types";
 
 import { uniqueArray } from "../../utils/arrays";
+import { fetchEgg } from "../../api/fetchEgg";
 
 const pokemonHelper = {
 	MAX_CATCH_RATE: 255,
@@ -13,7 +14,7 @@ const pokemonHelper = {
 			(100 / pokemonHelper.MAX_CATCH_RATE) * capture_rate
 		);
 
-    return captureRate;
+		return captureRate;
 	},
 
 	makeDamageSets: (
@@ -83,20 +84,33 @@ const pokemonHelper = {
 		return effects;
 	},
 
-  makeGenderRatios: (data: any) => {
-    let femaleRatio = (data.gender_rate / 8) * 100;
-	  let maleRatio = 100 - femaleRatio;
+	makeEggs: (data: any) => {
+		const { egg_groups, hatch_counter } = data;
+    const hatchCounter = 255 * (hatch_counter + 1);
+    const eggGroups: { name: string }[] = egg_groups.map((egg: any) => ({
+      name: egg.name,
+    }));
+
+		return {
+			hatchCounter,
+			eggGroups,
+		};
+	},
+
+	makeGenderRatios: (data: any) => {
+		let femaleRatio = (data.gender_rate / 8) * 100;
+		let maleRatio = 100 - femaleRatio;
 
 		if (data.gender_rate === -1) {
 			femaleRatio = 0;
 			maleRatio = 0;
 		}
 
-    return {
-      femaleRatio,
-      maleRatio,
-    }
-  },
+		return {
+			femaleRatio,
+			maleRatio,
+		};
+	},
 
 	transformPower: (power: number) => (power === 2 ? "2x" : "1/2x"),
 };
