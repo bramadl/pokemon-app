@@ -2,7 +2,7 @@ import React from "react";
 
 export const MainPanel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	return (
-		<main className="absolute left-full top-0 w-full md:static md:flex-1 h-screen bg-dark-100 overflow-auto">
+		<main className="absolute left-full top-0 w-full md:static md:flex-1 h-screen bg-dark-100 overflow-hidden">
 			{children}
 		</main>
 	);
