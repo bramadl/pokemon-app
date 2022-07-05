@@ -1,6 +1,7 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { RiMenuUnfoldFill } from "react-icons/ri";
 import { useQuery } from "react-query";
+import { BeatLoader } from "react-spinners";
 
 import { fetchPokemonByName } from "../../api/fetchPokemon";
 
@@ -42,10 +43,8 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 			}
 		};
 
-		if (isLoading) return null;
-
-		const preminentElement: ElementKey = data.types[0].type.name;
-		const colorTheme = elements[preminentElement].textClass;
+		const preminentElement: ElementKey = data?.types[0].type.name;
+		const colorTheme = elements[preminentElement]?.textClass;
 
 		return (
 			<section
@@ -75,21 +74,28 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
 					</div>
 				</header>
 
-				<PokemonFigure pokemon={data} />
-
-				<PokemonThemeContext.Provider value={colorTheme}>
-					<article className="flex justify-center gap-8 my-20 px-20">
-						<div className="w-full max-w-xl flex flex-col gap-4">
-							<PokemonAbilitiesAndEffect abilities={data.abilities} />
-							<PokemonTypeEffectiveness types={data.types} />
-							<PokemonBaseStats stats={data.stats} weight={data.weight} />
-							<PokemonCatchRate name={data.name} />
-							<PokemonGenderRatio name={data.name} />
-							<PokemonEggGroups name={data.name} />
-						</div>
-						<div className="w-full max-w-xl flex flex-col gap-4"></div>
-					</article>
-				</PokemonThemeContext.Provider>
+				{isLoading ? (
+					<div className="w-full h-full flex items-center justify-center">
+						<BeatLoader color="rgba(255, 255, 255, 0.5)" />
+					</div>
+				) : (
+					<>
+						<PokemonFigure pokemon={data} />
+						<PokemonThemeContext.Provider value={colorTheme}>
+							<article className="flex justify-center gap-8 my-20 px-20">
+								<div className="w-full max-w-xl flex flex-col gap-4">
+									<PokemonAbilitiesAndEffect abilities={data.abilities} />
+									<PokemonTypeEffectiveness types={data.types} />
+									<PokemonBaseStats stats={data.stats} weight={data.weight} />
+									<PokemonCatchRate name={data.name} />
+									<PokemonGenderRatio name={data.name} />
+									<PokemonEggGroups name={data.name} />
+								</div>
+								<div className="w-full max-w-xl flex flex-col gap-4"></div>
+							</article>
+						</PokemonThemeContext.Provider>
+					</>
+				)}
 			</section>
 		);
 	}

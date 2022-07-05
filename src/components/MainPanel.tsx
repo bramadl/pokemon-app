@@ -1,6 +1,8 @@
 import React from "react";
 
-export const MainPanel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const MainPanel: React.FC<{
+	children: React.ReactNode;
+}> = ({ children }) => {
 	return (
 		<main className="absolute left-full top-0 w-full md:static md:flex-1 h-screen bg-dark-100 overflow-hidden">
 			{children}
@@ -8,7 +10,7 @@ export const MainPanel: React.FC<{ children: React.ReactNode }> = ({ children })
 	);
 };
 
-export const EmptyContent = () => {
+export const EmptyContent: React.FC<{}> = () => {
 	return (
 		<div className="w-full h-full flex items-center justify-center">
 			<svg

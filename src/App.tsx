@@ -6,7 +6,13 @@ import { HomePage } from "./pages/HomePage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { TypesPage } from "./pages/TypesPage";
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			cacheTime: 3600 * 60 * 24 * 7,
+		},
+	},
+});
 
 function App() {
 	const location = useLocation();
@@ -19,15 +25,15 @@ function App() {
 	}, [location]);
 
 	return (
-    <QueryClientProvider client={queryClient}>
-      <div className="relative w-full h-screen text-white bg-black overflow-hidden">
-        <Routes>
-          <Route path="/pokemon" element={<HomePage />}></Route>
-          <Route path="/types" element={<TypesPage />}></Route>
-          <Route path="/settings" element={<SettingsPage />}></Route>
-        </Routes>
-      </div>
-    </QueryClientProvider>
+		<QueryClientProvider client={queryClient}>
+			<div className="relative w-full h-screen text-white bg-black overflow-hidden">
+				<Routes>
+					<Route path="/pokemon" element={<HomePage />}></Route>
+					<Route path="/types" element={<TypesPage />}></Route>
+					<Route path="/settings" element={<SettingsPage />}></Route>
+				</Routes>
+			</div>
+		</QueryClientProvider>
 	);
 }
 
