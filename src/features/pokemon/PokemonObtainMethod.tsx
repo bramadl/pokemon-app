@@ -1,76 +1,88 @@
-import React, { ReactNode, useContext, useEffect } from "react";
-import { MdCatchingPokemon } from "react-icons/md";
+import React, { useContext, useEffect } from "react";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 import { useQuery } from "react-query";
-import { ClipLoader } from "react-spinners";
+import { CircleLoader } from "react-spinners";
 
+import { fetchEvolutionChain } from "../../api/fetchEvolutionChain";
 import { fetchPokemonSpecies } from "../../api/fetchPokemon";
 
 import { Card } from "../../components/Card";
-
 import pokemonHelper from "./pokemon.helpers";
 
-import { stringifySlug } from "../../utils/strings";
-
 import { PokemonThemeContext } from "./PokemonDetail";
-import { IoIosCheckmarkCircle } from "react-icons/io";
-import { fetchEvolutionChain } from "../../api/fetchEvolutionChain";
-
-type ChainProps = {
-	evolution_details: any[];
-	evolves_to: any[];
-	species: {
-		name: string;
-	};
-};
 
 const CardWrapper: React.FC<{
-	header: React.ReactNode | React.ReactFragment;
+  header: React.ReactNode | React.ReactFragment;
 }> = ({ header }) => {
-	return <Card id="carchRateSection" header={header} />;
+  return <Card id="carchRateSection" header={header} />;
 };
 
 export const PokemonObtainMethod: React.FC<{
-	name: string;
-	pokemonId: number;
+  name: string;
+  pokemonId: number;
 }> = React.memo(({ name, pokemonId }) => {
-	const pokemonThemeContext = useContext(PokemonThemeContext);
+  const pokemonThemeContext = useContext(PokemonThemeContext);
 
-	const { data, isLoading: isFetchingSpecies } = useQuery(
-		["pokemon-species", name],
-		() => fetchPokemonSpecies(name),
-		{
-			refetchOnWindowFocus: false,
-		}
-	);
+  const { data: pokemonSpeciesData, isLoading: isFetchingSpecies } = useQuery(
+    ["pokemon-species", name],
+    () => fetchPokemonSpecies(name),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
-	const {
-		data: evolution_chain,
-		refetch,
-		isLoading: isFetchingEvolution,
-	} = useQuery(
-		["evolution-chain", name],
-		() => fetchEvolutionChain(data.evolution_chain.url),
-		{
-			enabled: false,
-			refetchOnWindowFocus: false,
-		}
-	);
+  const {
+    data: pokemonEvolutionData,
+    refetch: fetchPokemonEvolutionData,
+    isLoading: isFetchingEvolution,
+  } = useQuery(
+    ["evolution-chain", name],
+    () => fetchEvolutionChain(pokemonSpeciesData.evolution_chain.url),
+    {
+      enabled: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
-	return (
-		<CardWrapper
-			header={
-				<div className="flex items-start gap-2">
-					<IoIosCheckmarkCircle className={`text-3xl ${pokemonThemeContext}`} />
-					<div className="flex flex-col">
-						<h3 className="text-lg font-semibold">How to Obtain</h3>
-						<ul className="flex flex-col list-disc list-inside">
-							<li>
-                Hayooo
-              </li>
-						</ul>
-					</div>
-				</div>
-			}
-		/>
-	);
+  useEffect(() => {
+    if (pokemonSpeciesData) fetchPokemonEvolutionData();
+  }, [pokemonSpeciesData]);
+
+  if (!pokemonEvolutionData) {
+    return (
+      <CardWrapper
+        header={
+          <div className="w-full flex items-center justify-center">
+            <CircleLoader color="#FFFFFF" />
+          </div>
+        }
+      />
+    );
+  }
+
+  const obtainMethods = pokemonHelper.makeObtainMethods({
+    name,
+    pokemonEvolutionData,
+    pokemonSpeciesData,
+  });
+
+  return (
+    <CardWrapper
+      header={
+        <div className="flex items-start gap-2">
+          <IoIosCheckmarkCircle className={`text-3xl ${pokemonThemeContext}`} />
+          <div className="flex flex-col">
+            <h3 className="text-lg font-semibold">How to Obtain</h3>
+            <ul className="flex flex-col list-disc list-inside">
+              {obtainMethods.map((method, index) => (
+                <li key={index} className="text-sm">
+                  {method}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      }
+    />
+  );
 });
