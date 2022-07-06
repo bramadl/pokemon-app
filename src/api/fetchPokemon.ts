@@ -22,3 +22,8 @@ export const fetchPokemonSpecies = async (name: string): Promise<any> => {
 	);
 	return data;
 };
+
+export const fetchPokemonSpeciesByUrl = async (url: string): Promise<any> => {
+	const { data } = await axios.get(url);
+	return data;
+};

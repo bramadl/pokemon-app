@@ -38,7 +38,7 @@ const SpriteModal: React.FC<{ thumbnail: string; text: string }> = ({
         type="button"
         onClick={() => setIsOpen(true)}
       >
-        <figure className="w-20 h-20 flex items-center justify-center bg-white/10 hover:bg-white/5 rounded-full transition ease-out duration-300">
+        <figure className="w-16 h-16 flex items-center justify-center bg-white/10 hover:bg-white/5 rounded-full transition ease-out duration-300">
           <img alt="Front Default" className="w-16 h-16" src={thumbnail} />
         </figure>
         <p className="text-xs text-center">{text}</p>

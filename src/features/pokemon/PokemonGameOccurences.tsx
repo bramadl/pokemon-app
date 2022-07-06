@@ -20,7 +20,7 @@ export const PokemonGameOccurences: React.FC<{
             <Disclosure.Button
               className={`w-full flex items-center justify-between gap-4 p-4 border-b ${
                 open ? "border-white/10" : "border-transparent"
-              } transition ease-out duration-300`}
+              } transition ease-out duration-300 group`}
             >
               <div className="flex items-center gap-2">
                 <RiGamepadFill className={`text-3xl ${pokemonThemeContext}`} />
@@ -34,7 +34,7 @@ export const PokemonGameOccurences: React.FC<{
               </div>
 
               <IoChevronForwardSharp
-                className={`text-2xl text-white/50 ${
+                className={`text-2xl text-white/50 group-hover:text-white ${
                   open ? "rotate-90" : ""
                 } transition ease-out duration-300`}
               />
@@ -50,18 +50,21 @@ export const PokemonGameOccurences: React.FC<{
                 leaveTo="transform -translate-y-4 opacity-0"
               >
                 <Disclosure.Panel className={"flex flex-wrap gap-2 p-4"}>
-                  {!!gameIndices.length && gameIndices.map((game) => (
-                    <img
-                      key={game.game_index}
-                      alt={pokemonGames[game.version.name as GameName].name}
-                      className="w-16 h-16 object-cover rounded "
-                      src={
-                        pokemonGames[game.version.name as GameName].thumbnail
-                      }
-                    />
-                  ))}
+                  {!!gameIndices.length &&
+                    gameIndices.map((game, index) => (
+                      <img
+                        key={index}
+                        alt={pokemonGames[game.version.name as GameName].name}
+                        className="w-16 h-16 object-cover rounded "
+                        src={`/img/${
+                          pokemonGames[game.version.name as GameName].thumbnail
+                        }`}
+                      />
+                    ))}
                   {!gameIndices.length && (
-                    <p className="text-sm text-white/50 italic">This pokemon are not available in any game currently...</p>
+                    <p className="text-sm text-white/50 italic">
+                      This pokemon are not available in any game currently...
+                    </p>
                   )}
                 </Disclosure.Panel>
               </Transition>

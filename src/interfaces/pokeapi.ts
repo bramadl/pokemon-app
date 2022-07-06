@@ -11,6 +11,7 @@ export type ChainLink = {
 
 export type PokemonSpecies = {
   name: string;
+  url: string;
 };
 
 export type EvolutionDetail = {

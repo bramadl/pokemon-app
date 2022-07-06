@@ -5,10 +5,12 @@ import { ElementKey } from "./pokemon.types";
 import {
   ChainLink,
   EvolutionChain,
+  EvolutionDetail,
 } from "../../interfaces/pokeapi";
 
 import { recursiveFinding, uniqueArray } from "../../utils/arrays";
-import { stringifySlug } from "../../utils/strings";
+import { shouldUse, stringifySlug } from "../../utils/strings";
+import React from "react";
 
 const pokemonHelper = {
   MAX_CATCH_RATE: 255,
@@ -142,170 +144,12 @@ const pokemonHelper = {
       const previousEvolution = pokemonSpeciesData.evolves_from_species.name;
       const currentEvolution = currentPokemon.species.name;
 
-      console.log("Current pokemon evolution detail: ", { currentPokemon });
-
       const listOfObtainMethods = currentPokemon.evolution_details.map(
         (evolution) => {
-          let tempObtainMethod: React.ReactNode;
-          const triggerName = evolution.trigger.name;
-
-          switch (triggerName) {
-            case "shed":
-              tempObtainMethod = (
-                <span>
-                  <span className="font-bold capitalize">
-                    {stringifySlug(previousEvolution)}
-                  </span>{" "}
-                  reaches level 20 and you have a spare slot in your party and a
-                  Poké Ball in your bag
-                </span>
-              );
-
-              if (evolution.held_item) {
-                tempObtainMethod = (
-                  <span>
-                    Trade{" "}
-                    <span className="font-bold capitalize">
-                      {stringifySlug(previousEvolution)}
-                    </span>{" "}
-                    holding a{" "}
-                    <span className="font-bold capitalize underline">
-                      {stringifySlug(evolution.held_item.name)}
-                    </span>
-                  </span>
-                );
-              }
-              break;
-
-            case "trade":
-              tempObtainMethod = (
-                <span>
-                  Trade{" "}
-                  <span className="font-bold capitalize">
-                    {stringifySlug(previousEvolution)}
-                  </span>
-                </span>
-              );
-
-              if (evolution.held_item) {
-                tempObtainMethod = (
-                  <span>
-                    Trade{" "}
-                    <span className="font-bold capitalize">
-                      {stringifySlug(previousEvolution)}
-                    </span>{" "}
-                    holding a{" "}
-                    <span className="font-bold capitalize underline">
-                      {stringifySlug(evolution.held_item.name)}
-                    </span>
-                  </span>
-                );
-              }
-              break;
-
-            case "use-item":
-              tempObtainMethod = (
-                <span>
-                  Use a{" "}
-                  <span className="font-bold capitalize">
-                    {stringifySlug(evolution.item.name)}
-                  </span>{" "}
-                  on{" "}
-                  <span className="font-bold capitalize">
-                    {stringifySlug(previousEvolution)}
-                  </span>
-                </span>
-              );
-              break;
-
-            case "level-up":
-              if (evolution.min_level) {
-                tempObtainMethod = (
-                  <span>
-                    <span className="font-bold capitalize">
-                      {stringifySlug(previousEvolution)}
-                    </span>{" "}
-                    reaches level{" "}
-                    <span className="font-bold">{evolution.min_level}</span>
-                  </span>
-                );
-              }
-
-              if (evolution.min_level && evolution.time_of_day) {
-                tempObtainMethod = (
-                  <span>
-                    Level up{" "}
-                    <span className="font-bold capitalize">
-                      {stringifySlug(previousEvolution)}
-                    </span>{" "}
-                    during{" "}
-                    <span className="font-bold">{evolution.time_of_day}</span>
-                  </span>
-                );
-              }
-
-              if (evolution.min_happiness) {
-                tempObtainMethod = (
-                  <span>
-                    Level up{" "}
-                    <span className="font-bold capitalize">
-                      {stringifySlug(previousEvolution)}
-                    </span>{" "}
-                    with high{" "}
-                    <span className="font-bold underline">friendship</span>
-                  </span>
-                );
-              }
-
-              if (evolution.min_beauty) {
-                tempObtainMethod = (
-                  <span>
-                    Level up{" "}
-                    <span className="font-bold capitalize">
-                      {stringifySlug(previousEvolution)}
-                    </span>{" "}
-                    with minimum happiness of{" "}
-                    <span className="font-bold underline">
-                      {evolution.min_beauty}
-                    </span>
-                  </span>
-                );
-              }
-
-              if (evolution.held_item && evolution.time_of_day) {
-                tempObtainMethod = (
-                  <span>
-                    Level up{" "}
-                    <span className="font-bold capitalize">
-                      {stringifySlug(previousEvolution)}
-                    </span>{" "}
-                    holding an{" "}
-                    <span className="font-bold underline">
-                      {evolution.held_item.name}
-                    </span>{" "}
-                    during the {evolution.time_of_day}
-                  </span>
-                );
-              }
-
-              if (evolution.known_move) {
-                tempObtainMethod = (
-                  <span>
-                    Level up{" "}
-                    <span className="font-bold capitalize">
-                      {stringifySlug(currentEvolution)}
-                    </span>{" "}
-                    knowing the move{" "}
-                    <span className="font-bold underline capitalize">
-                      {evolution.known_move.name}
-                    </span>
-                  </span>
-                );
-              }
-              break;
-          }
-
-          return tempObtainMethod;
+          return parseEvolutionDetail(evolution, {
+            currentEvolution,
+            previousEvolution,
+          });
         }
       );
 
@@ -316,6 +160,172 @@ const pokemonHelper = {
   },
 
   transformPower: (power: number) => (power === 2 ? "2x" : "1/2x"),
+};
+
+export const parseEvolutionDetail = (
+  evolution: EvolutionDetail,
+  {
+    currentEvolution,
+    previousEvolution,
+  }: { currentEvolution: any; previousEvolution: any }
+): React.ReactNode => {
+  const triggerName = evolution.trigger.name;
+
+  let tempObtainMethod: React.ReactNode;
+
+  switch (triggerName) {
+    case "shed":
+      tempObtainMethod = (
+        <span>
+          <span className="font-bold capitalize">
+            {stringifySlug(previousEvolution)}
+          </span>{" "}
+          reaches level 20 and you have a spare slot in your party and a Poké
+          Ball in your bag
+        </span>
+      );
+
+      if (evolution.held_item) {
+        tempObtainMethod = (
+          <span>
+            Trade{" "}
+            <span className="font-bold capitalize">
+              {stringifySlug(previousEvolution)}
+            </span>{" "}
+            holding {shouldUse(evolution.held_item.name)}{" "}
+            <span className="font-bold capitalize underline">
+              {stringifySlug(evolution.held_item.name)}
+            </span>
+          </span>
+        );
+      }
+      break;
+
+    case "trade":
+      tempObtainMethod = (
+        <span>
+          Trade{" "}
+          <span className="font-bold capitalize">
+            {stringifySlug(previousEvolution)}
+          </span>
+        </span>
+      );
+
+      if (evolution.held_item) {
+        tempObtainMethod = (
+          <span>
+            Trade{" "}
+            <span className="font-bold capitalize">
+              {stringifySlug(previousEvolution)}
+            </span>{" "}
+            holding {shouldUse(evolution.held_item.name)}{" "}
+            <span className="font-bold capitalize underline">
+              {stringifySlug(evolution.held_item.name)}
+            </span>
+          </span>
+        );
+      }
+      break;
+
+    case "use-item":
+      tempObtainMethod = (
+        <span>
+          Use {shouldUse(evolution.item.name)}{" "}
+          <span className="font-bold capitalize">
+            {stringifySlug(evolution.item.name)}
+          </span>{" "}
+          on{" "}
+          <span className="font-bold capitalize">
+            {stringifySlug(previousEvolution)}
+          </span>
+        </span>
+      );
+      break;
+
+    case "level-up":
+      if (evolution.min_level) {
+        tempObtainMethod = (
+          <span>
+            <span className="font-bold capitalize">
+              {stringifySlug(previousEvolution)}
+            </span>{" "}
+            reaches level{" "}
+            <span className="font-bold">{evolution.min_level}</span>
+          </span>
+        );
+      }
+
+      if (evolution.min_level && evolution.time_of_day) {
+        tempObtainMethod = (
+          <span>
+            Level up{" "}
+            <span className="font-bold capitalize">
+              {stringifySlug(previousEvolution)}
+            </span>{" "}
+            during <span className="font-bold">{evolution.time_of_day}</span>
+          </span>
+        );
+      }
+
+      if (evolution.min_happiness) {
+        tempObtainMethod = (
+          <span>
+            Level up{" "}
+            <span className="font-bold capitalize">
+              {stringifySlug(previousEvolution)}
+            </span>{" "}
+            with high <span className="font-bold underline">friendship</span>
+          </span>
+        );
+      }
+
+      if (evolution.min_beauty) {
+        tempObtainMethod = (
+          <span>
+            Level up{" "}
+            <span className="font-bold capitalize">
+              {stringifySlug(previousEvolution)}
+            </span>{" "}
+            with minimum happiness of{" "}
+            <span className="font-bold underline">{evolution.min_beauty}</span>
+          </span>
+        );
+      }
+
+      if (evolution.held_item && evolution.time_of_day) {
+        tempObtainMethod = (
+          <span>
+            Level up{" "}
+            <span className="font-bold capitalize">
+              {stringifySlug(previousEvolution)}
+            </span>{" "}
+            holding {shouldUse(evolution.held_item.name)}{" "}
+            <span className="font-bold underline">
+              {evolution.held_item.name}
+            </span>{" "}
+            during the {evolution.time_of_day}
+          </span>
+        );
+      }
+
+      if (evolution.known_move) {
+        tempObtainMethod = (
+          <span>
+            Level up{" "}
+            <span className="font-bold capitalize">
+              {stringifySlug(currentEvolution)}
+            </span>{" "}
+            knowing the move{" "}
+            <span className="font-bold underline capitalize">
+              {evolution.known_move.name}
+            </span>
+          </span>
+        );
+      }
+      break;
+  }
+
+  return tempObtainMethod;
 };
 
 export default pokemonHelper;
