@@ -12,8 +12,6 @@ export const PokemonGameOccurences: React.FC<{
 }> = React.memo(({ gameIndices }) => {
   const pokemonThemeContext = useContext(PokemonThemeContext);
 
-  console.log(gameIndices);
-
   return (
     <div className="w-full h-auto rounded-lg bg-dark-200 transition-all ease-out duration-300">
       <Disclosure>
