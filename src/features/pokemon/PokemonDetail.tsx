@@ -55,7 +55,7 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
         onScroll={scrollHandler}
       >
         <header
-          className={`sticky top-0 left-0 w-full h-auto py-4 px-3 border-b ${
+          className={`sticky z-10 top-0 left-0 w-full h-auto py-4 px-3 border-b ${
             hasScrolledDown
               ? "border-white/10 bg-dark-200"
               : "border-transparent"
