@@ -27,7 +27,11 @@ export const PokemonGameOccurences: React.FC<{
               <div className="flex items-center gap-2">
                 <RiGamepadFill className={`text-3xl ${pokemonThemeContext}`} />
                 <span className="text-base font-semibold">
-                  Available in {gameIndices.length} games
+                  {!!gameIndices.length ? (
+                    <>Available in {gameIndices.length} games</>
+                  ) : (
+                    <>No game indices at the moment</>
+                  )}
                 </span>
               </div>
 
@@ -48,7 +52,7 @@ export const PokemonGameOccurences: React.FC<{
                 leaveTo="transform -translate-y-4 opacity-0"
               >
                 <Disclosure.Panel className={"flex flex-wrap gap-2 p-4"}>
-                  {gameIndices.map((game) => (
+                  {!!gameIndices.length && gameIndices.map((game) => (
                     <img
                       alt={pokemonGames[game.version.name as GameName].name}
                       className="w-16 h-16 object-cover rounded "
@@ -57,6 +61,9 @@ export const PokemonGameOccurences: React.FC<{
                       }
                     />
                   ))}
+                  {!gameIndices.length && (
+                    <p className="text-sm text-white/50 italic">This pokemon are not available in any game currently...</p>
+                  )}
                 </Disclosure.Panel>
               </Transition>
             </div>
