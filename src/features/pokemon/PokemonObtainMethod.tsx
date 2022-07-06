@@ -73,7 +73,7 @@ export const PokemonObtainMethod: React.FC<{
           <IoIosCheckmarkCircle className={`text-3xl ${pokemonThemeContext}`} />
           <div className="flex flex-col">
             <h3 className="text-base font-semibold">How to Obtain</h3>
-            <ul className="flex flex-col list-disc list-inside">
+            <ul className={`flex flex-col ${obtainMethods.length > 1 ? "list-disc list-inside" : ""}`}>
               {obtainMethods.map((method, index) => (
                 <li key={index} className="text-sm">
                   {method}

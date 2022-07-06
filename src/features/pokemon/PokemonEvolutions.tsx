@@ -46,8 +46,6 @@ const PokemonEvolutionDetails: React.FC<{
     };
   });
 
-  console.log(evolutions);
-
   return (
     <ul className="flex flex-col gap-4">
       {evolutions.map((evolution) => (
@@ -126,17 +124,17 @@ const PokemonEvolutionLines: React.FC<{
             />
           </Disclosure.Button>
 
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-1 md:gap-2">
             {pokemonData.map((pokemon, index, pokemons) => (
               <React.Fragment key={pokemon.name}>
                 <Link
                   to={`/pokemon?preview=${pokemon.name}`}
                   className="flex flex-col items-center justify-center gap-1"
                 >
-                  <figure className="w-16 h-16 flex items-center justify-center bg-white/10 hover:bg-white/5 rounded-full transition ease-out duration-300">
+                  <figure className="w-12 md:w-16 h-12 md:h-16 flex items-center justify-center bg-white/10 hover:bg-white/5 rounded-full transition ease-out duration-300">
                     <img
                       alt="Front Default"
-                      className="w-16 h-16"
+                      className="w-12 md:w-16 h-12 md:h-16"
                       loading="lazy"
                       src={pokemon.sprite}
                     />
@@ -156,7 +154,7 @@ const PokemonEvolutionLines: React.FC<{
                   </div>
                 </Link>
                 {index !== pokemons.length - 1 && (
-                  <div className="w-8 h-1 -mt-10 bg-white/10 rounded-full" />
+                  <div className="w-4 md:w-8 h-1 -mt-10 bg-white/10 rounded-full" />
                 )}
               </React.Fragment>
             ))}

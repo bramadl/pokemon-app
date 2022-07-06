@@ -1,7 +1,8 @@
 import React, { createContext, useEffect, useState } from "react";
+import { IoChevronForwardSharp } from "react-icons/io5";
 import { RiMenuUnfoldFill } from "react-icons/ri";
 import { useQuery } from "react-query";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 
 import { fetchPokemonByName } from "../../api/fetchPokemon";
@@ -24,6 +25,40 @@ import { PokemonSprites } from "./PokemonSprites";
 import { PokemonTypeEffectiveness } from "./PokemonTypeEffectiveness";
 
 export const PokemonThemeContext = createContext("");
+
+const PokemonDetailHeader: React.FC<{
+  hasScrolledDown: boolean;
+  pokemon: string;
+}> = ({ hasScrolledDown, pokemon }) => {
+  return (
+    <header
+      className={`sticky z-[1] top-0 left-0 w-full h-auto py-4 px-3 border-b ${
+        hasScrolledDown ? "border-white/10 bg-dark-200" : "border-transparent"
+      } transition ease-out duration-300`}
+    >
+      <div className="flex items-center gap-4">
+        <button className="hidden md:block hover:bg-success-100/10 text-success-100 py-1.5 px-3 rounded transition ease-out duration-300">
+          <RiMenuUnfoldFill className="text-xl" />
+        </button>
+
+        <Link
+          to={"/pokemon"}
+          className="md:hidden block hover:bg-success-100/10 text-success-100 py-1.5 px-3 rounded transition ease-out duration-300"
+        >
+          <IoChevronForwardSharp className="text-xl rotate-180" />
+        </Link>
+
+        <h2
+          className={`capitalize text-xl font-bold ${
+            hasScrolledDown ? "opacity-100" : "opacity-0"
+          } transition ease-out duration-300`}
+        >
+          {stringifySlug(pokemon)}
+        </h2>
+      </div>
+    </header>
+  );
+};
 
 export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
   ({ pokemon }) => {
@@ -68,27 +103,10 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
         className="w-full h-full overflow-auto"
         onScroll={scrollHandler}
       >
-        <header
-          className={`sticky z-[1] top-0 left-0 w-full h-auto py-4 px-3 border-b ${
-            hasScrolledDown
-              ? "border-white/10 bg-dark-200"
-              : "border-transparent"
-          } transition ease-out duration-300`}
-        >
-          <div className="flex items-center gap-4">
-            <button className="hover:bg-success-100/10 text-success-100 py-1.5 px-3 rounded transition ease-out duration-300">
-              <RiMenuUnfoldFill className="text-xl" />
-            </button>
-
-            <h2
-              className={`capitalize text-xl font-bold ${
-                hasScrolledDown ? "opacity-100" : "opacity-0"
-              } transition ease-out duration-300`}
-            >
-              {stringifySlug(pokemon)}
-            </h2>
-          </div>
-        </header>
+        <PokemonDetailHeader
+          hasScrolledDown={hasScrolledDown}
+          pokemon={pokemon}
+        />
 
         {isLoading ? (
           <div className="w-full h-full flex items-center justify-center">
@@ -98,8 +116,8 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
           <>
             <PokemonFigure pokemon={data} />
             <PokemonThemeContext.Provider value={colorTheme}>
-              <article className="flex justify-center gap-8 my-20 px-20">
-                <div className="flex-1 max-w-xl flex flex-col gap-4">
+              <article className="flex flex-col xl:flex-row items-center xl:items-start justify-center gap-4 xl:gap-8 my-20 px-4 md:px-12 xl:px-20">
+                <div className="flex-1 w-full md:w-auto max-w-xl flex flex-col gap-4">
                   <PokemonAbilitiesAndEffect abilities={data.abilities} />
                   <PokemonTypeEffectiveness types={data.types} />
                   <PokemonBaseStats stats={data.stats} weight={data.weight} />
@@ -108,7 +126,7 @@ export const PokemonDetail: React.FC<{ pokemon: string }> = React.memo(
                   <PokemonEggGroups name={data.name} />
                 </div>
 
-                <div className="flex-1 max-w-xl flex flex-col gap-4">
+                <div className="flex-1 w-full md:w-auto max-w-xl flex flex-col gap-4">
                   <PokemonObtainMethod name={data.name} pokemonId={data.id} />
                   <PokemonGameOccurences gameIndices={data.game_indices} />
                   <PokemonEvolutions name={data.name} species={data.species} />

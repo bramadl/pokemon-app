@@ -33,19 +33,23 @@ const SpriteModal: React.FC<{ thumbnail: string; text: string }> = ({
 
   return (
     <>
-      <button
-        className="block"
-        type="button"
-        onClick={() => setIsOpen(true)}
-      >
-        <figure className="w-16 h-16 flex items-center justify-center bg-white/10 hover:bg-white/5 rounded-full transition ease-out duration-300">
-          <img alt="Front Default" className="w-16 h-16" src={thumbnail} />
+      <button className="block" type="button" onClick={() => setIsOpen(true)}>
+        <figure className="w-12 md:w-16 h-12 md:h-16 flex items-center justify-center bg-white/10 hover:bg-white/5 rounded-full transition ease-out duration-300">
+          <img
+            alt="Front Default"
+            className="w-12 md:w-16 h-12 md:h-16"
+            src={thumbnail}
+          />
         </figure>
         <p className="text-xs text-center">{text}</p>
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => setIsOpen(false)}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -70,7 +74,11 @@ const SpriteModal: React.FC<{ thumbnail: string; text: string }> = ({
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel>
-                  <img alt="Front Default" className="w-80 h-80" src={thumbnail} />
+                  <img
+                    alt="Front Default"
+                    className="w-80 h-80"
+                    src={thumbnail}
+                  />
                 </Dialog.Panel>
               </Transition.Child>
             </div>
