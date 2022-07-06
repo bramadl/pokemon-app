@@ -52,6 +52,7 @@ export const PokemonGameOccurences: React.FC<{
                 <Disclosure.Panel className={"flex flex-wrap gap-2 p-4"}>
                   {!!gameIndices.length && gameIndices.map((game) => (
                     <img
+                      key={game.game_index}
                       alt={pokemonGames[game.version.name as GameName].name}
                       className="w-16 h-16 object-cover rounded "
                       src={
