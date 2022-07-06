@@ -33,7 +33,7 @@ const CardWrapper: React.FC<{
 			header={
 				<div className="flex items-center gap-2">
 					<BsStarFill className={`text-3xl ${pokemonThemeContext}`} />
-					<h3 className="text-lg font-semibold">Type Effectiveness</h3>
+					<h3 className="text-base font-semibold">Type Effectiveness</h3>
 				</div>
 			}
 		>

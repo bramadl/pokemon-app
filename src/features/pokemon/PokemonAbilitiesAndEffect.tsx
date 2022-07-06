@@ -28,7 +28,7 @@ const CardWrapper: React.FC<{
 			header={
 				<div className="flex items-center gap-2">
 					<RiInformationFill className={`text-3xl ${pokemonThemeContext}`} />
-					<h3 className="text-lg font-semibold">Abilities and Effects</h3>
+					<h3 className="text-base font-semibold">Abilities and Effects</h3>
 				</div>
 			}
 		>

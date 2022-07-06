@@ -32,7 +32,7 @@ export const PokemonBaseStats: React.FC<{
         <React.Fragment>
           <div className="flex items-center gap-2">
             <HiOutlineMenuAlt1 className={`text-3xl ${pokemonThemeContext}`} />
-            <h3 className="text-lg font-semibold">Base Stats</h3>
+            <h3 className="text-base font-semibold">Base Stats</h3>
           </div>
           <div className="flex items-center justify-center bg-white/10 text-white/50 py-0.5 px-3 rounded-full">
             <span className="font-semibold text-sm">{total}</span>
