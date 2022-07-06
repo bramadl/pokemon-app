@@ -14,7 +14,7 @@ import { PokemonThemeContext } from "./PokemonDetail";
 const CardWrapper: React.FC<{
   header: React.ReactNode | React.ReactFragment;
 }> = ({ header }) => {
-  return <Card id="carchRateSection" header={header} />;
+  return <Card id="obtainMethodSection" header={header} />;
 };
 
 export const PokemonObtainMethod: React.FC<{
