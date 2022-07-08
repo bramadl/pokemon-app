@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const MainPanel: React.FC<{
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }> = ({ children }) => {
   const [params, _] = useSearchParams();
   const previewParam = params.get("preview");
