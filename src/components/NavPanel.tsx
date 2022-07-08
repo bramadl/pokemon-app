@@ -13,24 +13,40 @@ export const NavPanel = () => {
 				to={"/pokemon"}
 			/>
 			<NavItem
+				as="button"
+				disabled
 				icon={<BsStarFill className="text-2xl" />}
 				text={"Types"}
-				to={"/types"}
 			/>
 			<NavItem
+				as="button"
+				disabled
 				icon={<IoMdCog className="text-2xl" />}
 				text={"Settings"}
-				to={"/settings"}
 			/>
 		</nav>
 	);
 };
 
 const NavItem: React.FC<{
+	as?: "button" | "link";
+	disabled?: boolean;
 	icon: React.ReactNode;
 	text: string;
-	to: string;
-}> = ({ icon, text, to }) => {
+	to?: string;
+}> = ({ as, disabled, icon, text, to }) => {
+	if (as === "button") {
+		return (
+			<button
+				className={`w-20 h-full flex flex-col items-center disabled:text-white/25 disabled:cursor-not-allowed justify-center gap-2 rounded-md`}
+				disabled={disabled}
+			>
+				{icon}
+				<span className="text-sm">{text}</span>
+			</button>
+		);
+	}
+
 	return (
 		<NavLink
 			className={({ isActive }) =>
@@ -38,7 +54,7 @@ const NavItem: React.FC<{
 					isActive ? "text-danger-100" : "text-white/25 hover:bg-white/5"
 				}`
 			}
-			to={to}
+			to={to!}
 		>
 			{icon}
 			<span className="text-sm">{text}</span>
