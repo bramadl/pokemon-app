@@ -88,9 +88,6 @@ const HomePageHeader: React.FC<{
 	return (
 		<div className="w-full">
 			<div className="flex items-center gap-6">
-				<button className="bg-white/5 hover:bg-white/10 text-white py-1.5 px-3 rounded transition ease-out duration-300">
-					<HiMenuAlt1 className="text-xl" />
-				</button>
 				<h1 className="font-bold text-xl">National Dex</h1>
 			</div>
 
