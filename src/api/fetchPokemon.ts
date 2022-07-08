@@ -11,6 +11,11 @@ export const fetchPokemonByUrl = async (url: string): Promise<any> => {
 	return data;
 };
 
+export const fetchPokemonById = async (pokemonId: number): Promise<any> => {
+	const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+	return data;
+};
+
 export const fetchPokemonByName = async (name: string): Promise<any> => {
 	const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
 	return data;
@@ -19,6 +24,13 @@ export const fetchPokemonByName = async (name: string): Promise<any> => {
 export const fetchPokemonSpecies = async (name: string): Promise<any> => {
 	const { data } = await axios.get(
 		`https://pokeapi.co/api/v2/pokemon-species/${name}`
+	);
+	return data;
+};
+
+export const fetchPokemonSpeciesById = async (pokemonId: number): Promise<any> => {
+	const { data } = await axios.get(
+		`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`
 	);
 	return data;
 };

@@ -3,14 +3,13 @@ import { MdCatchingPokemon } from "react-icons/md";
 import { useQuery } from "react-query";
 import { ClipLoader } from "react-spinners";
 
-import { fetchPokemonSpecies } from "../../api/fetchPokemon";
+import { fetchPokemonSpeciesByUrl } from "../../api/fetchPokemon";
 
 import { Card } from "../../components/Card";
 
-import pokemonHelper from "./pokemon.helpers";
-
 import { stringifySlug } from "../../utils/strings";
 
+import pokemonHelper from "./pokemon.helpers";
 import { PokemonThemeContext } from "./PokemonDetail";
 
 const CardWrapper: React.FC<{
@@ -19,13 +18,13 @@ const CardWrapper: React.FC<{
 	return <Card id="carchRateSection" header={header} />;
 };
 
-export const PokemonCatchRate: React.FC<{ name: string }> = React.memo(
-	({ name }) => {
+export const PokemonCatchRate: React.FC<{ species: { url: string } }> = React.memo(
+	({ species: { url } }) => {
 		const pokemonThemeContext = useContext(PokemonThemeContext);
 
 		const { data, isLoading } = useQuery(
-			["pokemon-species", name],
-			() => fetchPokemonSpecies(name),
+			["pokemon-species", url],
+			() => fetchPokemonSpeciesByUrl(url),
 			{
 				refetchOnWindowFocus: false,
 			}
@@ -53,7 +52,7 @@ export const PokemonCatchRate: React.FC<{ name: string }> = React.memo(
 						<div className="flex flex-col">
 							<h3 className="text-base font-semibold">Catch Rate</h3>
 							<p className="text-xs text-white/50 leading-none">
-								<span className="capitalize">{stringifySlug(name)}</span> has a
+								<span className="capitalize">{stringifySlug(data.name)}</span> has a
 								catch rate of {captureRate}%
 							</p>
 						</div>

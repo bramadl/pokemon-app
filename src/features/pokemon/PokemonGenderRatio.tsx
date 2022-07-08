@@ -4,10 +4,12 @@ import { RiPieChartFill } from "react-icons/ri";
 import { useQuery } from "react-query";
 import { ClipLoader } from "react-spinners";
 
-import { fetchPokemonSpecies } from "../../api/fetchPokemon";
+import {  fetchPokemonSpeciesByUrl } from "../../api/fetchPokemon";
 
 import { Card } from "../../components/Card";
+
 import { stringifySlug } from "../../utils/strings";
+
 import pokemonHelper from "./pokemon.helpers";
 import { PokemonThemeContext } from "./PokemonDetail";
 
@@ -17,13 +19,13 @@ const CardWrapper: React.FC<{
 	return <Card id="carchRateSection" header={header} />;
 };
 
-export const PokemonGenderRatio: React.FC<{ name: string }> = React.memo(
-	({ name }) => {
+export const PokemonGenderRatio: React.FC<{ species: { url: string } }> = React.memo(
+	({ species: { url } }) => {
 		const pokemonThemeContext = useContext(PokemonThemeContext);
 
 		const { data, isLoading } = useQuery(
-			["pokemon-species", name],
-			() => fetchPokemonSpecies(name),
+			["pokemon-species", url],
+			() => fetchPokemonSpeciesByUrl(url),
 			{
 				refetchOnWindowFocus: false,
 			}
@@ -56,7 +58,7 @@ export const PokemonGenderRatio: React.FC<{ name: string }> = React.memo(
 								}`}
 							>
 								{isGenderless
-									? `${stringifySlug(name)} is genderless`
+									? `${stringifySlug(data.name)} is genderless`
 									: "Gender Ratio"}
 							</h3>
 						</div>

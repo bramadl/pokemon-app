@@ -73,7 +73,7 @@ export const HomePage = () => {
 						</div>
 					</AsidePanel>
 					<MainPanel>
-            <PokemonDetail pokemon={previewParams.get("preview")!} />
+            <PokemonDetail pokemonId={parseInt(previewParams.get("preview")!, 10)} />
           </MainPanel>
 				</React.Fragment>
 			)}

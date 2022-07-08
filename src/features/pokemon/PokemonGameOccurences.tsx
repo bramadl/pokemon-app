@@ -54,10 +54,10 @@ export const PokemonGameOccurences: React.FC<{
                     gameIndices.map((game, index) => (
                       <img
                         key={index}
-                        alt={pokemonGames[game.version.name as GameName].name}
+                        alt={pokemonGames[game.version.name as GameName]?.name}
                         className="w-16 h-16 object-cover rounded "
                         src={`/img/${
-                          pokemonGames[game.version.name as GameName].thumbnail
+                          pokemonGames[game.version.name as GameName]?.thumbnail
                         }`}
                       />
                     ))}

@@ -17,13 +17,13 @@ export const PokemonCard: React.FC<{
 
 	return (
 		<NavLink
-			id={id}
+			id={`pokemon-${id}`}
 			className={() =>
 				`flex items-center justify-between gap-2 xl:gap-4 py-4 px-4 xl:px-8 border-b last:border-b-0 border-white/10 hover:bg-white/5 ${
-					params.get("preview") === name ? "bg-red-900/10" : ""
+					params.get("preview") === id ? "bg-red-900/10" : ""
 				}`
 			}
-			to={`/pokemon?preview=${name}`}
+			to={`/pokemon?preview=${id}`}
 		>
 			<figure className="flex-shrink-0">
 				<img

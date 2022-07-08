@@ -3,6 +3,7 @@ import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 
 import { fetchPokemon, fetchPokemonByUrl } from "../../api/fetchPokemon";
+import pokemonHelper from "./pokemon.helpers";
 
 import { Pokemon, PokemonPage } from "./pokemon.types";
 
@@ -44,10 +45,7 @@ export const useFetchPokemons = () => {
 						data.map((pokemon) => ({
 							id: pokemon.id,
 							name: pokemon.name,
-							sprite:
-								pokemon.sprites.other.home.front_default ||
-								pokemon.sprites.front_default ||
-								pokemon.sprites.other["official-artwork"].front_default,
+							sprite: pokemonHelper.recursivelyFindSprite(pokemon.sprites),
 							types: pokemon.types.map((type: any) => type.type),
 						}))
 					);

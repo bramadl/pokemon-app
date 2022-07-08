@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { GiDinosaurEgg } from "react-icons/gi";
-import { useQueries, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { CircleLoader } from "react-spinners";
-import { fetchEgg } from "../../api/fetchEgg";
-import { fetchPokemonSpecies } from "../../api/fetchPokemon";
+
+import { fetchPokemonSpeciesByUrl } from "../../api/fetchPokemon";
+
 import { Card } from "../../components/Card";
+
 import pokemonHelper from "./pokemon.helpers";
 import { PokemonThemeContext } from "./PokemonDetail";
 
@@ -14,13 +16,13 @@ const CardWrapper: React.FC<{
 	return <Card id="eggGroupsSection" header={header} />;
 };
 
-export const PokemonEggGroups: React.FC<{ name: string }> = React.memo(
-	({ name }) => {
+export const PokemonEggGroups: React.FC<{ species: { url: string } }> =
+	React.memo(({ species: { url } }) => {
 		const pokemonThemeContext = useContext(PokemonThemeContext);
 
 		const { data, isLoading } = useQuery(
-			["eggs", name],
-			() => fetchPokemonSpecies(name),
+			["eggs", url],
+			() => fetchPokemonSpeciesByUrl(url),
 			{
 				refetchOnWindowFocus: false,
 			}
@@ -63,5 +65,4 @@ export const PokemonEggGroups: React.FC<{ name: string }> = React.memo(
 				}
 			/>
 		);
-	}
-);
+	});

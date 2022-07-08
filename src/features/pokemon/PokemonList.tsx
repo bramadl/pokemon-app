@@ -17,7 +17,7 @@ export const PokemonList: React.FC<{
 		if (ref.current) {
 			const parentElement = ref.current.parentElement;
 			if (parentElement) {
-				const target = ref.current.querySelector<HTMLDivElement>(`#${previewParam}`);
+				const target = ref.current.querySelector<HTMLDivElement>(`#pokemon-${previewParam}`);
 				if (target) {
 					const top = target.offsetTop - target.offsetHeight - 16;
 					parentElement.scrollTo({
@@ -34,7 +34,7 @@ export const PokemonList: React.FC<{
 			{pokemons.map((pokemon, index) => (
 				<PokemonCard
 					key={pokemon.id}
-					id={pokemon.name}
+					id={pokemon.id.toString()}
 					pokedex={padNumber(index + 1, 3)}
 					name={pokemon.name}
 					sprite={pokemon.sprite}

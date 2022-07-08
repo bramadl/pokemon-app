@@ -4,17 +4,21 @@ import { padNumber } from "../../utils/numbers";
 import { stringifySlug } from "../../utils/strings";
 
 import { elements } from "./pokemon.elements";
+import pokemonHelper from "./pokemon.helpers";
 import { ElementKey } from "./pokemon.types";
 
 export const PokemonFigure: React.FC<{
 	pokemon: any;
 }> = React.memo(({ pokemon }) => {
-	const pokemonSprite =
-		pokemon.sprites.other.home.front_default ||
-		pokemon.sprites.front_default ||
-		pokemon.sprites.other["official-artwork"].front_default;
+	const pokemonSprite = pokemonHelper.recursivelyFindSprite(pokemon.sprites);
 
-	const pokemonDex = padNumber(pokemon.order, 3);
+	const pokemonDex = (
+		pokemon.species.url.split(
+			"https://pokeapi.co/api/v2/pokemon-species/"
+		)[1] as string
+	)
+		.trimEnd()
+		.split("/");
 
 	const pokemonName = stringifySlug(pokemon.name);
 
@@ -37,11 +41,17 @@ export const PokemonFigure: React.FC<{
 	return (
 		<section id="pokemonFigureSection">
 			<figure className="flex items-center justify-center">
-				<img alt={pokemonName} className="w-[300px] h-[300px]" src={pokemonSprite} />
+				<img
+					alt={pokemonName}
+					className="w-[300px] h-[300px]"
+					src={pokemonSprite}
+				/>
 			</figure>
 			<div className="flex flex-col items-center justify-center mt-4">
 				<p className="font-bold text-lg text-white/50">{pokemonDex}</p>
-				<h2 className="font-bold text-4xl text-white capitalize">{pokemonName}</h2>
+				<h2 className="font-bold text-4xl text-white capitalize">
+					{pokemonName}
+				</h2>
 				<div className="flex items-center gap-2">{pokemonTypes}</div>
 			</div>
 		</section>

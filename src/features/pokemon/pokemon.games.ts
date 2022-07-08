@@ -101,4 +101,12 @@ export const pokemonGames = {
     name: "White 2",
     thumbnail: "white.png",
   },
+  "omega-ruby": {
+    name: "Omega Ruby",
+    thumbnail: "omega-ruby.webp",
+  },
+  "alpha-sapphire": {
+    name: "Alpha Sapphire",
+    thumbnail: "alpha-sapphire.webp",
+  },
 };
